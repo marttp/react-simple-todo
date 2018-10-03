@@ -1,28 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import Header from './components/Header/Header';
+import InputFrom from './components/Input/Input';
+import Body from './components/Body/Body';
+
+import './App.css'
 
 class App extends Component {
+
+  state = {
+    todoList: []
+  }
+
+  onAddTodo = (newTodo) => {
+    this.setState({ todoList: [...this.state.todoList, newTodo ]})
+  }
+
+  onDeleteTodo = (deletedTodoId) => {
+    const newTodo = this.state.todoList.filter(toDo => toDo.id !== deletedTodoId)
+    this.setState({ todoList: newTodo })
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Header />
+        <InputFrom addToDo={this.onAddTodo}/>
+        <Body toDo={this.state.todoList} deleteTodo={this.onDeleteTodo}/>
       </div>
     );
   }
 }
+
 
 export default App;
